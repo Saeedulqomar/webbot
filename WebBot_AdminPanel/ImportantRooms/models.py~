@@ -1,0 +1,32 @@
+from django.db import models
+
+
+class BuildingName(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class ImportantRoom(models.Model):
+    ROOM_TYPES = [
+        ('CLASSROOM', 'Classroom'),
+        ('LAB', 'Laboratory'),
+        ('OFFICE', 'Office'),
+        # Добавь другие типы по мере необходимости
+    ]
+
+    room_number = models.IntegerField(default=0)
+    location = models.CharField(max_length=255)
+    responsibility = models.TextField(blank=True)  # Ответственность может быть пустым
+    room_type = models.CharField(max_length=255, choices=ROOM_TYPES, default='CLASSROOM')  # Ограничиваем типы комнат
+    floor_number = models.IntegerField()
+    building_name = models.ForeignKey(BuildingName, related_name='important_rooms', on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return f"Room {self.room_number} in {self.building_name}"
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['room_number', 'floor_number']),  # Индексы для поиска
+        ]

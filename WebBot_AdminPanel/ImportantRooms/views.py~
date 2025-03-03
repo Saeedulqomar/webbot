@@ -1,0 +1,12 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import ImportantRoom
+from rest_framework import generics
+from .serializers import ImportantRoomSerializer
+
+class RoomListCreateView(generics.ListCreateAPIView):
+    queryset = ImportantRoom.objects.all()
+    serializer_class = ImportantRoomSerializer
+
+class RoomRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ImportantRoom.objects.all()
+    serializer_class = ImportantRoomSerializer

@@ -1,0 +1,10 @@
+from django.urls import path
+from .views import (
+    RoomListCreateView, RoomRetrieveUpdateDestroyView
+)
+
+urlpatterns = [
+
+    path('', RoomListCreateView.as_view(), name='api_room_list_create'),
+    path('<int:pk>/', RoomRetrieveUpdateDestroyView.as_view(), name='api_room_detail'),
+]

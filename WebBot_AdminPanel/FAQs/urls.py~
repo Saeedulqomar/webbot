@@ -1,0 +1,7 @@
+from django.urls import path
+from .views import QuestionListCreateView, QuestionRetrieveUpdateDestroyView
+
+urlpatterns = [
+    path('api/questions/', QuestionListCreateView.as_view(), name='api_question_list_create'),
+    path('api/questions/<int:pk>/', QuestionRetrieveUpdateDestroyView.as_view(), name='api_question_detail'),
+]

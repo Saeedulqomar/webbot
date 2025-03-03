@@ -1,0 +1,10 @@
+from django.urls import path
+from .views import ServiceListCreateView, ServiceRetrieveUpdateDestroyView, CampusServiceListCreateView, CampusServiceRetrieveUpdateDestroyView
+
+urlpatterns = [
+    path('', ServiceListCreateView.as_view(), name='api_service_list_create'),
+    path('<int:pk>/', ServiceRetrieveUpdateDestroyView.as_view(), name='api_service_detail'),
+
+    path('', CampusServiceListCreateView.as_view(), name='api_campus_service_list_create'),
+    path('<int:pk>/', CampusServiceRetrieveUpdateDestroyView.as_view(), name='api_campus_service_detail'),
+]

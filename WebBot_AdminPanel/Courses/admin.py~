@@ -1,0 +1,10 @@
+from django.contrib import admin
+from .models import Course
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('courseName', 'courseType', 'professor')  # Отображаем ключевые поля
+    search_fields = ('courseName', 'professor__fullName')  # Поиск по имени курса и имени профессора
+    list_filter = ('courseType',)  # Фильтрация по типу курса
+    ordering = ('courseName',)  # Сортировка по названию курса
+    list_per_page = 25

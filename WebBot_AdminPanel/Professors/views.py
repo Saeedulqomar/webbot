@@ -1,0 +1,45 @@
+from django.http import Http404
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import Professor
+from .serializers import ProfessorSerializer
+
+class ProfessorListCreateView(APIView):
+    def get(self, request):
+        professors = Professor.objects.all()
+        serializer = ProfessorSerializer(professors, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ProfessorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+class ProfessorRetrieveUpdateDestroyView(APIView):
+    def get_object(self, pk):
+        try:
+            return Professor.objects.get(pk=pk)
+        except Professor.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        professor = self.get_object(pk)
+        serializer = ProfessorSerializer(professor)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        professor = self.get_object(pk)
+        serializer = ProfessorSerializer(professor, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk):
+        professor = self.get_object(pk)
+        professor.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

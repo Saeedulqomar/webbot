@@ -1,0 +1,10 @@
+from django.urls import path
+from .views import OrganizerListCreateView, OrganizerRetrieveUpdateDestroyView, EventListCreateView, EventRetrieveUpdateDestroyView
+
+urlpatterns = [
+    path('', OrganizerListCreateView.as_view(), name='api_organizer_list_create'),
+    path('<int:pk>/', OrganizerRetrieveUpdateDestroyView.as_view(), name='api_organizer_detail'),
+
+    path('', EventListCreateView.as_view(), name='api_event_list_create'),
+    path('<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='api_event_detail'),
+]
