@@ -1,0 +1,11 @@
+from django.db import models
+
+class Feedback(models.Model):
+    professor = models.ForeignKey('Professors.Professor', related_name='feedbacks', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, blank=True, null=True)  # Empty if anonymous
+    comment = models.TextField()
+    rating = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback for {self.professor.full_name} by {self.name or 'Anonymous'}"

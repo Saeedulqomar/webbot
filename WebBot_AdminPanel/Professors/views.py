@@ -2,6 +2,7 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics
 
 from .models import Professor
 from .serializers import ProfessorSerializer
@@ -43,3 +44,13 @@ class ProfessorRetrieveUpdateDestroyView(APIView):
         professor = self.get_object(pk)
         professor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+class ProfessorListView(generics.ListAPIView):
+    queryset = Professor.objects.all()
+    serializer_class = ProfessorSerializer
+
+class ProfessorDetailView(generics.RetrieveAPIView):
+    queryset = Professor.objects.all()
+    serializer_class = ProfessorSerializer

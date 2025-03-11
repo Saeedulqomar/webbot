@@ -11,11 +11,18 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from dis import show_code
 from pathlib import Path
-import os
 from dotenv import load_dotenv
+
+import os
+
+# Media Files
+# Folder where uploaded media files will be stored
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+MEDIA_URL = '/media/'  # URL to access media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 load_dotenv()
 
@@ -34,8 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
-
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Events',
     'Clubs',
+    'Feedbacks',
     'ImportantRooms',
     'FAQs',
-    'Courses',
     'Professors',
     'CampusServices',
     'rest_framework',
@@ -55,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +69,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'WebBot_AdminPanel.urls'
 
@@ -150,15 +160,4 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-}
-
-
-
-JAZZMIN_SETTINGS = {
-    "site_title": "WebBot Admin Panel",
-    "site_header": "WebBot Admin Panel",
-    "site_brand": "WebBot Admin Panel",
-    "welcome_sign": "Welcome to the WebBot Admin Panel",
-    "search_model": "auth.User",
-    'show_ui_builder': True,
 }

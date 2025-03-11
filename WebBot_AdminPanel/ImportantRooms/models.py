@@ -7,23 +7,22 @@ class BuildingName(models.Model):
     def __str__(self):
         return self.name
 
+class RoomType(models.Model):
+    room_type = models.CharField(max_length=100, unique=True)  # Prevent duplicate room types
+
+    def __str__(self):
+        return self.room_type
 
 class ImportantRoom(models.Model):
-    ROOM_TYPES = [
-        ('CLASSROOM', 'Classroom'),
-        ('LAB', 'Laboratory'),
-        ('OFFICE', 'Office'),
-    ]
-
     room_number = models.CharField(max_length=10)  # Changed to CharField to support alphanumeric room numbers
     location = models.CharField(max_length=255)
-    responsibility = models.TextField(blank=True)  # Optional responsibility field
-    room_type = models.CharField(max_length=10, choices=ROOM_TYPES, default='CLASSROOM')  # Reduced max_length
-    floor_number = models.PositiveIntegerField()  # Ensures only non-negative values
+    responsibility = models.TextField()  # Optional responsibility field
+    room_type = models.ForeignKey(RoomType, related_name='important_rooms', on_delete=models.CASCADE)
+    floor_number = models.IntegerField()
     building_name = models.ForeignKey(BuildingName, related_name='important_rooms', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Room {self.room_number} ({self.get_room_type_display()}) in {self.building_name}"
+        return f"Room {self.room_number} in {self.building_name}"
 
     class Meta:
         indexes = [

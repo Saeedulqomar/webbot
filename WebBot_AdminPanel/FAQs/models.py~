@@ -1,13 +1,22 @@
 from django.db import models
+from django.db.models import UniqueConstraint
+
+
+
 
 class Question(models.Model):
-    question = models.CharField(max_length=255, unique=True)  # Уникальный вопрос
-    answer = models.TextField(blank=True)  # Ответ может быть пустым
+    question = models.CharField(max_length=255, unique=True)  # Ensures unique questions
+    answer = models.TextField()
 
     def __str__(self):
         return self.question
 
     class Meta:
         indexes = [
-            models.Index(fields=['question']),  # Индекс для быстрого поиска по вопросу
+            models.Index(fields=['question']),  # Index for fast lookups
+        ]
+        ordering = ['question']  # Default sorting by question
+
+        constraints = [
+            models.UniqueConstraint(fields=['question', 'answer'], name='unique_question_answer')
         ]

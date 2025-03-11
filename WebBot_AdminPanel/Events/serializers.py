@@ -9,8 +9,14 @@ class OrganizerSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    organizedBy = OrganizerSerializer()
+    organized_by = OrganizerSerializer()
 
     class Meta:
         model = Event
         fields = '__all__'
+
+    def validate(self, data):
+        if Event.objects.filter(date=data['date'], venue=data['venue']).exists():
+            raise serializers.ValidationError("An event is already scheduled at this venue on this date.")
+        return data
+

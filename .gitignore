@@ -1,0 +1,49 @@
+# Byte-compiled / cached
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+*.env
+*.venv
+
+# Django settings & secrets
+.env
+*.sqlite3
+db.sqlite3
+*.log
+local_settings.py
+
+# Media & Static Files
+/media/
+staticfiles/
+static/
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Node.js (if using Vue.js frontend)
+node_modules/
+npm-debug.log
+
+# Python dependencies
+Pipfile
+Pipfile.lock
+requirements.txt
+
+# Gunicorn logs (if using Gunicorn)
+gunicorn.log
+gunicorn.err
+
+# Docker (if using Docker)
+docker-compose.yml
+*.dockerignore

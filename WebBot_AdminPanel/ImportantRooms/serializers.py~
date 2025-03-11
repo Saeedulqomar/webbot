@@ -1,0 +1,14 @@
+from rest_framework import serializers
+from .models import ImportantRoom, BuildingName
+
+class BuildingNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BuildingName
+        fields = ['name']
+
+class ImportantRoomSerializer(serializers.ModelSerializer):
+    building_name = serializers.CharField(source='building.name', read_only=True)
+
+    class Meta:
+        model = ImportantRoom
+        fields = '__all__'

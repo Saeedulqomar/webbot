@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -23,10 +25,13 @@ urlpatterns = [
     path('api/events/', include('Events.urls')),
     path('api/professors/', include('Professors.urls')),
     path('api/clubs/', include('Clubs.urls')),
-    path('api/courses/', include('Courses.urls')),
     path('api/campus_services/', include('CampusServices.urls')),
     path('api/services/', include('CampusServices.urls')),
     path('api/important_rooms/', include('ImportantRooms.urls')),
     path('api/faqs/', include('FAQs.urls')),
+    path('api/feedbacks/', include('Feedbacks.urls')),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
